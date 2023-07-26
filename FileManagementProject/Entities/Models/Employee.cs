@@ -8,7 +8,7 @@
         public String? EmployeeEmail { get; set; }
         public String? EmployeePassword { get; set; }
         public int EmployeeDepartmentId { get; set; }
-        public int? EmployeeManagerId { get; set; }
+        public int? EmployeeManagerId { get; set; } 
 
     }
 }
