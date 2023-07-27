@@ -16,7 +16,7 @@ namespace FileManagementProject.Repositories.Config
                     EmployeeLastName = "Büyükbaş",
                     EmployeeEmail = "enes_bykbss@hotmail.com",
                     EmployeePassword = "1234",
-                    EmployeeDepartmentId = 0,
+                    DepartmentId = 0,
                     EmployeeManagerId = 0
                 },
                 new Employee
@@ -26,7 +26,7 @@ namespace FileManagementProject.Repositories.Config
                     EmployeeLastName = "Büyük",
                     EmployeeEmail = "enes_buyukbas@hotmail.com",
                     EmployeePassword = "12345",
-                    EmployeeDepartmentId = 1
+                    DepartmentId = 1
                 },
                 new Employee
                 {
@@ -35,7 +35,7 @@ namespace FileManagementProject.Repositories.Config
                     EmployeeLastName = "Yüksel",
                     EmployeeEmail = "beyzayuksel0111@gmail.com",
                     EmployeePassword = "123456789",
-                    EmployeeDepartmentId = 2
+                    DepartmentId = 2
                 }
                 );
         }

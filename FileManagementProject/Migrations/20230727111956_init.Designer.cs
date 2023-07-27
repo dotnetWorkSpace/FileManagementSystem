@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FileManagementProject.Migrations
 {
     [DbContext(typeof(RepositoryContext))]
-    [Migration("20230726143817_init")]
+    [Migration("20230727111956_init")]
     partial class init
     {
         /// <inheritdoc />
@@ -24,6 +24,87 @@ namespace FileManagementProject.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("FileManagementProject.Entities.Models.Department", b =>
+                {
+                    b.Property<int?>("DepartmentId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int?>("DepartmentId"));
+
+                    b.Property<string>("DepartmentName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int?>("ParentDepartmentId")
+                        .HasColumnType("int");
+
+                    b.HasKey("DepartmentId");
+
+                    b.ToTable("Departments");
+
+                    b.HasData(
+                        new
+                        {
+                            DepartmentId = 0,
+                            DepartmentName = "Director"
+                        },
+                        new
+                        {
+                            DepartmentId = 1,
+                            DepartmentName = "Purchasing Department",
+                            ParentDepartmentId = 0
+                        },
+                        new
+                        {
+                            DepartmentId = 2,
+                            DepartmentName = "Purchasing Manager",
+                            ParentDepartmentId = 1
+                        },
+                        new
+                        {
+                            DepartmentId = 3,
+                            DepartmentName = "Purchasing Personnel",
+                            ParentDepartmentId = 2
+                        },
+                        new
+                        {
+                            DepartmentId = 4,
+                            DepartmentName = "Accounting Department",
+                            ParentDepartmentId = 0
+                        },
+                        new
+                        {
+                            DepartmentId = 5,
+                            DepartmentName = "Accounting Chief",
+                            ParentDepartmentId = 4
+                        },
+                        new
+                        {
+                            DepartmentId = 6,
+                            DepartmentName = "Accounting Personnel",
+                            ParentDepartmentId = 5
+                        },
+                        new
+                        {
+                            DepartmentId = 7,
+                            DepartmentName = "Sales Department",
+                            ParentDepartmentId = 0
+                        },
+                        new
+                        {
+                            DepartmentId = 8,
+                            DepartmentName = "Sales Chief",
+                            ParentDepartmentId = 7
+                        },
+                        new
+                        {
+                            DepartmentId = 9,
+                            DepartmentName = "Sales Personnel",
+                            ParentDepartmentId = 8
+                        });
+                });
 
             modelBuilder.Entity("FileManagementProject.Entities.Models.Employee", b =>
                 {

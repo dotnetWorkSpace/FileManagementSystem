@@ -21,7 +21,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entities\Dtos\" />
     <Folder Include="Repositories\Contracts\" />
     <Folder Include="Services\" />
   </ItemGroup>

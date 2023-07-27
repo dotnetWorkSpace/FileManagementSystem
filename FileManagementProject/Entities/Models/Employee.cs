@@ -7,8 +7,8 @@
         public String? EmployeeLastName { get; set; }
         public String? EmployeeEmail { get; set; }
         public String? EmployeePassword { get; set; }
-        public int EmployeeDepartmentId { get; set; }
-        public int? EmployeeManagerId { get; set; } 
-
+        public int? EmployeeManagerId { get; set; }
+        public int DepartmentId { get; set; }
+        public virtual Department Department { get; set; }
     }
 }
