@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Lenovo\\Desktop\\MY PROJECTS\\FileManagement\\FileManagementProject\\FileManagementProject\\FileManagementProject.csproj": {}
+    "C:\\Users\\beyza\\Source\\Repos\\FileManagementSystem\\FileManagementProject\\FileManagementProject.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Lenovo\\Desktop\\MY PROJECTS\\FileManagement\\FileManagementProject\\FileManagementProject\\FileManagementProject.csproj": {
+    "C:\\Users\\beyza\\Source\\Repos\\FileManagementSystem\\FileManagementProject\\FileManagementProject.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Lenovo\\Desktop\\MY PROJECTS\\FileManagement\\FileManagementProject\\FileManagementProject\\FileManagementProject.csproj",
+        "projectUniqueName": "C:\\Users\\beyza\\Source\\Repos\\FileManagementSystem\\FileManagementProject\\FileManagementProject.csproj",
         "projectName": "FileManagementProject",
-        "projectPath": "C:\\Users\\Lenovo\\Desktop\\MY PROJECTS\\FileManagement\\FileManagementProject\\FileManagementProject\\FileManagementProject.csproj",
-        "packagesPath": "C:\\Users\\Lenovo\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Lenovo\\Desktop\\MY PROJECTS\\FileManagement\\FileManagementProject\\FileManagementProject\\obj\\",
+        "projectPath": "C:\\Users\\beyza\\Source\\Repos\\FileManagementSystem\\FileManagementProject\\FileManagementProject.csproj",
+        "packagesPath": "C:\\Users\\beyza\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\beyza\\Source\\Repos\\FileManagementSystem\\FileManagementProject\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Lenovo\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\beyza\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
@@ -22,7 +22,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\sdk\\7.0.306\\Sdks\\Microsoft.NET.Sdk.Web\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -76,8 +75,7 @@
             "net47",
             "net471",
             "net472",
-            "net48",
-            "net481"
+            "net48"
           ],
           "assetTargetFallback": true,
           "warn": true,
@@ -89,7 +87,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.306\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.303\\RuntimeIdentifierGraph.json"
         }
       }
     }
