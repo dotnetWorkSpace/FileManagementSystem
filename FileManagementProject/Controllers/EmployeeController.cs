@@ -1,5 +1,7 @@
 ﻿using FileManagementProject.Entities.Dtos;
-using FileManagementProject.Repositories;
+using FileManagementProject.Entities.Models;
+using FileManagementProject.Repositories.Contracts;
+using FileManagementProject.Repositories.EFCore;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,19 +12,19 @@ namespace FileManagementProject.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly RepositoryContext _context;
+        private readonly IRepositoryManager _manager;
 
-        public EmployeeController(RepositoryContext context)
+        public EmployeeController(IRepositoryManager manager)
         {
-            _context = context;
+            _manager = manager;
         }
 
         [HttpGet]
-        public IActionResult GetAllEmployees() 
+        public IActionResult GetAllEmployee() 
         {
             try
             {
-                var employees = _context.Employees.ToList();
+                var employees = _manager.Employee.GetAllEmployees(false);
                 return Ok(employees);
             }
             catch (Exception ex)
@@ -36,9 +38,9 @@ namespace FileManagementProject.Controllers
         {
             try
             {
-                var employees = _context.Employees
-                    .Where(e => e.EmployeeId.Equals(id))
-                    .SingleOrDefault();
+                var employees = _manager
+                    .Employee
+                    .GetOneEmployeesById(id, false);
 
                 if (employees is null)
                     return NotFound();
@@ -52,27 +54,23 @@ namespace FileManagementProject.Controllers
             }
         }
 
+    
+
         [HttpGet("department/{id:int}")]
-        public IActionResult GetEmployeeWithDepartmentName([FromRoute(Name ="id")]int id)
+        public IActionResult GetEmployeeWithDepartmentName([FromRoute(Name = "id")] int id)
         {
             try
             {
-                var employee = _context.Employees
-                    .Include(e => e.Department) // Çalışanın bağlı olduğu Departmanı dahil et
-                    .Where(e => e.EmployeeId.Equals(id))
-                    .SingleOrDefault();
+                var employee = _manager.Employee.GetOneEmployeeWithDepartment(id, false);
 
-                if (employee is null)
-                    return NotFound();
 
                 var employeeDto = new EmployeeDto
-                {
+                { 
                     EmployeeId = employee.EmployeeId,
                     EmployeeFirstName = employee.EmployeeFirstName,
                     EmployeeLastName = employee.EmployeeLastName,
-                    DepartmentName = employee.Department?.DepartmentName // Çalışanın bağlı olduğu Departmanın adını al
+                    DepartmentName = employee.Department?.DepartmentName // Çalışanın bağlı olduğu Departmanın adını alır
                 };
-
                 return Ok(employeeDto);
             }
             catch (Exception ex)
