@@ -135,6 +135,35 @@ namespace FileManagementProject.Controllers
              }
         
         }
+        [HttpPut("{id:int}")]
+        public ActionResult UpdateDepartment([FromRoute(Name = "id")] int id, [FromBody] DepartmentDto departmentDto)
+        {
+           try
+           {
+             if (!ModelState.IsValid)
+             return BadRequest(ModelState);
+
+             var department = _context.Departments.FirstOrDefault(d => d.DepartmentId == id);
+
+             if (department == null)
+             return NotFound();
+
+        
+             department.DepartmentName = departmentDto.DepartmentName;
+             department.DepartmentId = departmentDto.DepartmentId;
+             department.ParentDepartmentId = departmentDto.ParentDepartmentId;
+             _context.SaveChanges();
+
+        
+            return Ok("Department updated successfully.");
+           }
+            catch (Exception ex)
+           {
+          
+                return StatusCode(500, "Internal Server Error: " + ex.Message);
+           }
+    
+        }
 
 
     }
