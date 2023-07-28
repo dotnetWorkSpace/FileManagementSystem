@@ -107,7 +107,34 @@ namespace FileManagementProject.Controllers
 
             return departmentDto;
         }
+        [HttpPost]
+        public ActionResult CreateDepartment([FromBody] DepartmentDto departmentDto)
+        {
+             try
+             {
+                if (!ModelState.IsValid)
+                return BadRequest(ModelState);
 
+                var new_department = new Department
+                {
+                    DepartmentName = departmentDto.DepartmentName,
+                    DepartmentId = departmentDto.DepartmentId,
+                    ParentDepartmentId = departmentDto.ParentDepartmentId,
+                }
+                _context.Departments.Add(new_department);
+                _context.SaveChanges();
+
+                return Ok("Department created successfully.");
+            
+             
+             }
+             catch (Exception ex){ 
+    
+                  return StatusCode(500, "Internal Server Error: " + ex.Message);
+            
+             }
+        
+        }
 
 
     }
