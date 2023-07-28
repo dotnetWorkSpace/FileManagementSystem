@@ -164,7 +164,28 @@ namespace FileManagementProject.Controllers
            }
     
         }
+        [HttpDelete("{id:int}")]
+        public ActionResult DeleteDepartment([FromRoute(Name = "id")] int id)
+        {
+           try
+           {
+              var department = _context.Departments.FirstOrDefault(d => d.DepartmentId == id);
 
+              if (department == null)
+              return NotFound();
+
+             _context.Departments.Remove(department);
+
+             _context.SaveChanges();
+
+        
+             return Ok("Department deleted successfully.");
+           }
+           catch (Exception ex)
+           {
+           return StatusCode(500, "Internal Server Error: " + ex.Message);
+           }
+        }
 
     }
 }
