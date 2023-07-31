@@ -55,6 +55,9 @@
         },
         "runtime": {
           "lib/net6.0/Humanizer.dll": {
+        },
+        "runtime": {
+          "lib/net6.0/Humanizer.dll": {
             "related": ".xml"
           }
         }
