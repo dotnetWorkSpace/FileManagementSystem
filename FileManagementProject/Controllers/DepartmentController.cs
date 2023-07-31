@@ -22,7 +22,7 @@ namespace FileManagementProject.Controllers
         }
 
         [HttpGet]
-        public ActionResult GetAllDepartments() 
+        public IActionResult GetAllDepartments() 
         {
             try
             {
@@ -37,7 +37,7 @@ namespace FileManagementProject.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public ActionResult GetDepartmentWithChildren([FromRoute(Name = "id")] int id)
+        public IActionResult GetDepartmentWithChildren([FromRoute(Name = "id")] int id)
         {
             try
             {
@@ -57,72 +57,16 @@ namespace FileManagementProject.Controllers
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
         [HttpPost]
-        public ActionResult CreateDepartment([FromBody] DepartmentDto departmentDto)
+        public IActionResult CreateDepartment([FromBody] Department department)
         {
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                if (department is null)
+                    return BadRequest(department);
 
-                var new_department = new Department
-                {
-                    DepartmentName = departmentDto.DepartmentName,
-                    DepartmentId = departmentDto.DepartmentId,
-                    ParentDepartmentId = departmentDto.ParentDepartmentId,
-                }
-                _context.Departments.Add(new_department);
-                _context.SaveChanges();
+                _manager.Department.Create(department);
+                _manager.Save();
 
                 return Ok("Department created successfully.");
 
@@ -137,23 +81,23 @@ namespace FileManagementProject.Controllers
 
         }
         [HttpPut("{id:int}")]
-        public ActionResult UpdateDepartment([FromRoute(Name = "id")] int id, [FromBody] DepartmentDto departmentDto)
+        public IActionResult UpdateDepartment([FromRoute(Name = "id")] int id, [FromBody] Department department)
         {
             try
             {
-                if (!ModelState.IsValid)
-                    return BadRequest(ModelState);
+                var entity = _manager
+                    .Department
+                    .GetDepartmentWithChildren(id, true);
 
-                var department = _context.Departments.FirstOrDefault(d => d.DepartmentId == id);
-
-                if (department == null)
+                if (entity is null)
                     return NotFound();
 
+                if (id != (int)department.DepartmentId)
+                    return BadRequest();
 
-                department.DepartmentName = departmentDto.DepartmentName;
-                department.DepartmentId = departmentDto.DepartmentId;
-                department.ParentDepartmentId = departmentDto.ParentDepartmentId;
-                _context.SaveChanges();
+                entity.DepartmentName = (string)department.DepartmentName;
+
+                _manager.Save();
 
 
                 return Ok("Department updated successfully.");
@@ -166,18 +110,19 @@ namespace FileManagementProject.Controllers
 
         }
         [HttpDelete("{id:int}")]
-        public ActionResult DeleteDepartment([FromRoute(Name = "id")] int id)
+        public IActionResult DeleteDepartment([FromRoute(Name = "id")] int id)
         {
             try
             {
-                var department = _context.Departments.FirstOrDefault(d => d.DepartmentId == id);
+                var entity = _manager
+                    .Department
+                    .GetDepartmentWithChildren(id, false);
 
-                if (department == null)
+                if (entity is null)
                     return NotFound();
 
-                _context.Departments.Remove(department);
-
-                _context.SaveChanges();
+                _manager.Department.Delete(entity);
+                _manager.Save();
 
 
                 return Ok("Department deleted successfully.");

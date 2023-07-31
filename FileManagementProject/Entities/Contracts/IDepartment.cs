@@ -5,7 +5,7 @@ namespace FileManagementProject.Entities.Contracts
 {
     public interface IDepartment
     {
-        Result<DepartmentDto> GetAllDepartments(int DepartmentId); //düzeltilmesi gerekiyor -Result
+        Result<DepartmentDto> GetDepartmentById(int DepartmentId);
         List<Department> Get();
     }
 }
