@@ -7,9 +7,9 @@ namespace FileManagementProject.Services
     {
         private readonly Lazy<IEmployeeService> _employeeService;
         private readonly Lazy<IDepartmentService> _departmentService;
-        public ServiceManager(IRepositoryManager repositoryManager) 
+        public ServiceManager(IRepositoryManager repositoryManager, ILoggerService logger) 
         {
-            _employeeService = new Lazy<IEmployeeService>(() => new EmployeeManager(repositoryManager));
+            _employeeService = new Lazy<IEmployeeService>(() => new EmployeeManager(repositoryManager, logger));
             _departmentService = new Lazy<IDepartmentService>(() => new DepartmentManager(repositoryManager));
         }
         public IEmployeeService EmployeeService => _employeeService.Value;
