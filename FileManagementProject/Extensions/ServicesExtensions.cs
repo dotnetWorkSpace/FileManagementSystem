@@ -1,5 +1,7 @@
 ﻿using FileManagementProject.Repositories.Contracts;
 using FileManagementProject.Repositories.EFCore;
+using FileManagementProject.Services;
+using FileManagementProject.Services.Contracts;
 using Microsoft.EntityFrameworkCore;
 
 namespace FileManagementProject.Extensions
@@ -16,7 +18,11 @@ namespace FileManagementProject.Extensions
         public static void ConfigureRepositoryManager(this IServiceCollection services)
         {
             services.AddScoped<IRepositoryManager, RepositoryManager>();
-            services.AddScoped<IRepositoryManager, RepositoryManager>();
+        }
+
+        public static void ConfigureServiceManager(this IServiceCollection services)
+        {
+            services.AddScoped<IServiceManager, ServiceManager>();
         }
     }
 }

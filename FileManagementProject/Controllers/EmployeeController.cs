@@ -2,6 +2,7 @@
 using FileManagementProject.Entities.Models;
 using FileManagementProject.Repositories.Contracts;
 using FileManagementProject.Repositories.EFCore;
+using FileManagementProject.Services.Contracts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,19 +13,19 @@ namespace FileManagementProject.Controllers
     [ApiController]
     public class EmployeeController : ControllerBase
     {
-        private readonly IRepositoryManager _manager;
+        private readonly IServiceManager _manager;
 
-        public EmployeeController(IRepositoryManager manager)
+        public EmployeeController(IServiceManager manager)
         {
             _manager = manager;
         }
 
-        [HttpGet("{/employees}")]
+        [HttpGet("/employees")]
         public IActionResult GetAllEmployee()
         {
             try
             {
-                var employees = _manager.Employee.GetAllEmployees(false);
+                var employees = _manager.EmployeeService.GetAllEmployees(false);
                 return Ok(employees);
             }
             catch (Exception ex)
@@ -39,8 +40,8 @@ namespace FileManagementProject.Controllers
             try
             {
                 var employees = _manager
-                    .Employee
-                    .GetOneEmployeesById(id, false);
+                    .EmployeeService
+                    .GetOneEmployeeById(id, false);
 
                 if (employees is null)
                     return NotFound();
@@ -61,7 +62,7 @@ namespace FileManagementProject.Controllers
         {
             try
             {
-                var employee = _manager.Employee.GetOneEmployeeWithDepartment(id, false);
+                var employee = _manager.EmployeeService.GetOneEmployeeWithDepartment(id, false);
 
 
                 var employeeDto = new EmployeeDto
@@ -88,8 +89,7 @@ namespace FileManagementProject.Controllers
                 if (employee is null)
                     return BadRequest(employee);
 
-                _manager.Employee.Create(employee);
-                _manager.Save();
+                _manager.EmployeeService.CreateOneEmployee(employee);
 
                 return Ok();
             }
@@ -104,23 +104,11 @@ namespace FileManagementProject.Controllers
         {
             try
             {
-                var entity = _manager
-                    .Employee
-                    .GetOneEmployeesById(id, true);
+                if(employee is null)
+                    return BadRequest(employee);
 
-                if (entity is null)
-                    return NotFound();
-
-                if (id != employee.EmployeeId)
-                    return BadRequest();
-
-                entity.EmployeeFirstName = employee.EmployeeFirstName;
-                entity.EmployeeLastName = employee.EmployeeLastName;
-                entity.DepartmentId = employee.DepartmentId;
-
-                _manager.Save();
-
-                return Ok();
+                _manager.EmployeeService.UpdateOneEmployee(id, employee, true);
+                return NoContent();
 
             }
             catch (Exception ex)
@@ -129,20 +117,15 @@ namespace FileManagementProject.Controllers
             }
         }
 
-        [HttpDelete("{id:int}")]
+        [HttpDelete]
+        [Route("~/api/employee/delete/{id:int}")]
         public IActionResult DeleteEmployee([FromRoute(Name = "id")] int id)
         {
             try
             {
-                var entity = _manager
-                    .Employee
-                    .GetOneEmployeesById(id, false);
 
-                if (entity is null)
-                    return NotFound();
+                _manager.EmployeeService.DeleteOneEmployee(id, false);
 
-                _manager.Employee.Delete(entity);
-                _manager.Save();
 
                 return Ok();
             }
