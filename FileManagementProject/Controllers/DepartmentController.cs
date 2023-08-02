@@ -7,6 +7,7 @@ using FileManagementProject.Entities.Dtos;
 using FileManagementProject.Entities.Contracts;
 using FileManagementProject.Repositories.EFCore;
 using FileManagementProject.Repositories.Contracts;
+using FileManagementProject.Services.Contracts;
 
 namespace FileManagementProject.Controllers
 {
@@ -14,9 +15,9 @@ namespace FileManagementProject.Controllers
     [ApiController]
     public class DepartmentController : ControllerBase
     {
-        private readonly IRepositoryManager _manager;
+        private readonly IServiceManager _manager;
 
-        public DepartmentController(IRepositoryManager manager)
+        public DepartmentController(IServiceManager manager)
         {
             _manager = manager;
         }
@@ -26,7 +27,7 @@ namespace FileManagementProject.Controllers
         {
             try
             {
-                var department = _manager.Department.GetAllDepartments(false);
+                var department = _manager.DepartmentService.GetAllDepartments(false);
 
                 return Ok(department);
             }
@@ -41,12 +42,12 @@ namespace FileManagementProject.Controllers
         {
             try
             {
-                var department = _manager.Department.GetDepartmentWithChildren(id, false);
+                var department = _manager.DepartmentService.GetDepartmentWithChildren(id, false);
 
                 if (department is null)
                     return NotFound(); // 404
 
-                var departmentDto = _manager.Department.MaptoDtoWithChildren(department);
+                var departmentDto = _manager.DepartmentService.MaptoDtoWithChildren(department);
 
                 return Ok(departmentDto);
             }
@@ -57,36 +58,15 @@ namespace FileManagementProject.Controllers
         }
 
 
-        [HttpPost]
-        public IActionResult CreateDepartment([FromBody] Department department)
-        {
-            try
-            {
-                if (department is null)
-                    return BadRequest(department);
 
-                _manager.Department.Create(department);
-                _manager.Save();
-
-                return Ok("Department created successfully.");
-
-
-            }
-            catch (Exception ex)
-            {
-
-                return StatusCode(500, "Internal Server Error: " + ex.Message);
-
-            }
-
-        }
+        
         [HttpPut("{id:int}")]
-        public IActionResult UpdateDepartment([FromRoute(Name = "id")] int id, [FromBody] Department department)
+        public IActionResult UpdateOneDepartment([FromRoute(Name = "id")] int id, [FromBody] Department department)
         {
             try
             {
                 var entity = _manager
-                    .Department
+                    .DepartmentService
                     .GetDepartmentWithChildren(id, true);
 
                 if (entity is null)
@@ -96,8 +76,6 @@ namespace FileManagementProject.Controllers
                     return BadRequest();
 
                 entity.DepartmentName = (string)department.DepartmentName;
-
-                _manager.Save();
 
 
                 return Ok("Department updated successfully.");
@@ -109,29 +87,7 @@ namespace FileManagementProject.Controllers
             }
 
         }
-        [HttpDelete("{id:int}")]
-        public IActionResult DeleteDepartment([FromRoute(Name = "id")] int id)
-        {
-            try
-            {
-                var entity = _manager
-                    .Department
-                    .GetDepartmentWithChildren(id, false);
-
-                if (entity is null)
-                    return NotFound();
-
-                _manager.Department.Delete(entity);
-                _manager.Save();
-
-
-                return Ok("Department deleted successfully.");
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal Server Error: " + ex.Message);
-            }
-        }
+        
 
     }
 }

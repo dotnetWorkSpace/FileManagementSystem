@@ -20,7 +20,7 @@ namespace FileManagementProject.Repositories.EFCore
             FindAll(trackChanges);
 
 
-        public Employee GetOneEmployeesById(int id, bool trackChanges) =>
+        public Employee GetOneEmployeeById(int id, bool trackChanges) =>
             FindByCondition(b => b.EmployeeId.Equals(id), trackChanges)
             .SingleOrDefault();
 
