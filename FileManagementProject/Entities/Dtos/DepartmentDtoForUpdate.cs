@@ -1,6 +1,6 @@
 ﻿namespace FileManagementProject.Entities.Dtos
 {
-    public record DepartmentDto
+    public record DepartmentDtoForUpdate
     {
         public int DepartmentId { get; init; }
         public String DepartmentName { get; init; }
@@ -8,3 +8,4 @@
         public List<DepartmentDto>? Children { get; init; }
     }
 }
+
