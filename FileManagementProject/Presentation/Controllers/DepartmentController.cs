@@ -46,18 +46,14 @@ namespace FileManagementProject.Presentation.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult UpdateOneDepartment([FromRoute(Name = "id")] int id, [FromBody] Department department)
+        public IActionResult UpdateOneDepartment([FromRoute(Name = "id")] int id, [FromBody] DepartmentDtoForUpdate departmentDto)
         {
 
-                var entity = _manager
-                    .DepartmentService
-                    .GetDepartmentWithChildren(id, true);
-
-
-                if (id != (int)department.DepartmentId)
+                if (id != (int)departmentDto.DepartmentId)
                     return BadRequest();
 
-                entity.DepartmentName = department.DepartmentName;
+
+            _manager.DepartmentService.UpdateOneDepartment(id, departmentDto, true);
 
 
                 return Ok("Department updated successfully.");

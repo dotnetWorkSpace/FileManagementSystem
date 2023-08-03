@@ -1,4 +1,6 @@
-﻿using FileManagementProject.Entities.Exceptions;
+﻿using AutoMapper;
+using FileManagementProject.Entities.Dtos;
+using FileManagementProject.Entities.Exceptions;
 using FileManagementProject.Entities.Models;
 using FileManagementProject.Repositories.Contracts;
 using FileManagementProject.Services.Contracts;
@@ -9,11 +11,12 @@ namespace FileManagementProject.Services
     {
         private readonly IRepositoryManager _manager;
         private readonly ILoggerService _logger;
-
-        public EmployeeManager(IRepositoryManager manager, ILoggerService logger)
+        private readonly IMapper _mapper;
+        public EmployeeManager(IRepositoryManager manager, ILoggerService logger, IMapper mapper)
         {
             _manager = manager;
             _logger = logger;
+            _mapper = mapper;
         }
 
         public Employee CreateOneEmployee(Employee employee)
@@ -35,9 +38,10 @@ namespace FileManagementProject.Services
             _manager.Save();
         }
 
-        public IEnumerable<Employee> GetAllEmployees(bool trackChanges)
+        public IEnumerable<EmployeeDto> GetAllEmployees(bool trackChanges)
         {
-            return _manager.Employee.GetAllEmployees(trackChanges);
+            var employees = _manager.Employee.GetAllEmployees(trackChanges);
+            return _mapper.Map<IEnumerable<EmployeeDto>>(employees);
 
         }
 
@@ -51,19 +55,24 @@ namespace FileManagementProject.Services
 
         public Employee GetOneEmployeeWithDepartment(int id, bool trackChanges)
         {
-            return _manager.Employee.GetOneEmployeeWithDepartment(id, trackChanges);
+            return _manager.Employee.GetOneEmployeeWithDepartment(id,trackChanges);
+
         }
 
-        public void UpdateOneEmployee(int id, Employee employee, bool trackChanges)
+        public void UpdateOneEmployee(int id, EmployeeDtoForUpdate employeeDto, bool trackChanges)
         {
             //check entity
             var entity = _manager.Employee.GetOneEmployeeById(id, trackChanges);
             if (entity is null)
                 throw new EmployeeNotFoundException(id);
 
-            entity.EmployeeFirstName = employee.EmployeeFirstName;
-            entity.EmployeeLastName = employee.EmployeeLastName;
-            entity.DepartmentId = employee.DepartmentId;
+            //Mapping
+            //entity.EmployeeFirstName = employee.EmployeeFirstName;
+            //entity.EmployeeLastName = employee.EmployeeLastName;
+            //entity.DepartmentId = employee.DepartmentId;
+
+            //AutoMapping
+            entity = _mapper.Map<Employee>(employeeDto);
 
             _manager.Employee.Update(entity);
             _manager.Save();

@@ -1,4 +1,6 @@
-﻿namespace FileManagementProject.Entities.Models
+﻿using FileManagementProject.Entities.Dtos;
+
+namespace FileManagementProject.Entities.Models
 {
     public class Department
     {

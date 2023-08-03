@@ -46,17 +46,17 @@ namespace FileManagementProject.Controllers
         public IActionResult GetEmployeeWithDepartmentName([FromRoute(Name = "id")] int id)
         {
 
-                var employee = _manager.EmployeeService.GetOneEmployeeWithDepartment(id, false);
+            var employee = _manager.EmployeeService.GetOneEmployeeWithDepartment(id, false);
 
 
-                var employeeDto = new EmployeeDto
-                {
-                    EmployeeId = employee.EmployeeId,
-                    EmployeeFirstName = employee.EmployeeFirstName,
-                    EmployeeLastName = employee.EmployeeLastName,
-                    DepartmentName = employee.Department?.DepartmentName // Çalışanın bağlı olduğu Departmanın adını alır
-                };
-                return Ok(employeeDto);
+            var employeeDto = new EmployeeDto
+            {
+                EmployeeId = employee.EmployeeId,
+                EmployeeFirstName = employee.EmployeeFirstName,
+                EmployeeLastName = employee.EmployeeLastName,
+                DepartmentName = employee.Department?.DepartmentName // Çalışanın bağlı olduğu Departmanın adını alır
+            };
+            return Ok(employeeDto);
 
 
         }
@@ -76,13 +76,13 @@ namespace FileManagementProject.Controllers
         }
 
         [HttpPut("{id:int}")]
-        public IActionResult UpdateEmployee([FromRoute(Name = "id")] int id, [FromBody] Employee employee)
+        public IActionResult UpdateEmployee([FromRoute(Name = "id")] int id, [FromBody] EmployeeDtoForUpdate employeeDto)
         {
 
-                if(employee is null)
-                    return BadRequest(employee);
+                if(employeeDto is null)
+                    return BadRequest(employeeDto);
 
-                _manager.EmployeeService.UpdateOneEmployee(id, employee, true);
+                _manager.EmployeeService.UpdateOneEmployee(id, employeeDto, true);
                 return NoContent();
 
 

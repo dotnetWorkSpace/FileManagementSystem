@@ -8,6 +8,6 @@ namespace FileManagementProject.Services.Contracts
         List<DepartmentDto> GetAllDepartments(bool trackChanges);
         Department GetDepartmentWithChildren(int id, bool trackChanges);
         DepartmentDto MaptoDtoWithChildren(Department department);
-        void UpdateOneDepartment(int id, Department department, bool trackChanges);
+        void UpdateOneDepartment(int id, DepartmentDtoForUpdate departmentDto, bool trackChanges);
     }
 }
