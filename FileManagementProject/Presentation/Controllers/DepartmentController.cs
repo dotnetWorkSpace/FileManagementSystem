@@ -8,6 +8,7 @@ using FileManagementProject.Entities.Contracts;
 using FileManagementProject.Repositories.EFCore;
 using FileManagementProject.Repositories.Contracts;
 using FileManagementProject.Services.Contracts;
+using FileManagementProject.Entities.Exceptions;
 
 namespace FileManagementProject.Presentation.Controllers
 {
@@ -25,49 +26,33 @@ namespace FileManagementProject.Presentation.Controllers
         [HttpGet]
         public IActionResult GetAllDepartments()
         {
-            try
-            {
+
                 var department = _manager.DepartmentService.GetAllDepartments(false);
 
                 return Ok(department);
-            }
-            catch (Exception ex)
-            {
-                throw new Exception(ex.Message);
-            }
+
         }
 
         [HttpGet("{id:int}")]
         public IActionResult GetDepartmentWithChildren([FromRoute(Name = "id")] int id)
         {
-            try
-            {
-                var department = _manager.DepartmentService.GetDepartmentWithChildren(id, false);
 
-                if (department is null)
-                    return NotFound(); // 404
+                var department = _manager.DepartmentService.GetDepartmentWithChildren(id, false);
 
                 var departmentDto = _manager.DepartmentService.MaptoDtoWithChildren(department);
 
                 return Ok(departmentDto);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode(500, "Internal Server Error: " + ex.Message);
-            }
+
         }
 
         [HttpPut("{id:int}")]
         public IActionResult UpdateOneDepartment([FromRoute(Name = "id")] int id, [FromBody] Department department)
         {
-            try
-            {
+
                 var entity = _manager
                     .DepartmentService
                     .GetDepartmentWithChildren(id, true);
 
-                if (entity is null)
-                    return NotFound();
 
                 if (id != (int)department.DepartmentId)
                     return BadRequest();
@@ -76,12 +61,7 @@ namespace FileManagementProject.Presentation.Controllers
 
 
                 return Ok("Department updated successfully.");
-            }
-            catch (Exception ex)
-            {
 
-                return StatusCode(500, "Internal Server Error: " + ex.Message);
-            }
 
         }
 

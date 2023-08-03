@@ -4,3 +4,18 @@
 2023-08-02 17:10:05.4859 Info Message Template Auto Format enabled
 2023-08-02 17:10:05.5583 Info Registered target NLog.Targets.FileTarget(Name=logfile)
 2023-08-02 17:10:05.5793 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\Lenovo\Desktop\MY PROJECTS\FileManagement\FileManagementProject\FileManagementProject\nlog.config
+2023-08-03 09:19:22.2227 Info Message Template Auto Format enabled
+2023-08-03 09:19:22.3592 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-08-03 09:19:22.3978 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\Lenovo\Desktop\MY PROJECTS\FileManagement\FileManagementProject\FileManagementProject\nlog.config
+2023-08-03 09:24:03.2932 Info Message Template Auto Format enabled
+2023-08-03 09:24:03.5793 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-08-03 09:24:03.6609 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\Lenovo\Desktop\MY PROJECTS\FileManagement\FileManagementProject\FileManagementProject\nlog.config
+2023-08-03 09:24:28.4655 Info Message Template Auto Format enabled
+2023-08-03 09:24:28.5351 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-08-03 09:24:28.5658 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\Lenovo\Desktop\MY PROJECTS\FileManagement\FileManagementProject\FileManagementProject\nlog.config
+2023-08-03 09:58:40.4978 Info Message Template Auto Format enabled
+2023-08-03 09:58:40.6634 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-08-03 09:58:40.7381 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\Lenovo\Desktop\MY PROJECTS\FileManagement\FileManagementProject\FileManagementProject\nlog.config
+2023-08-03 10:01:04.7190 Info Message Template Auto Format enabled
+2023-08-03 10:01:04.7732 Info Registered target NLog.Targets.FileTarget(Name=logfile)
+2023-08-03 10:01:04.7915 Info Validating config: TargetNames=logfile, ConfigItems=12, FilePath=C:\Users\Lenovo\Desktop\MY PROJECTS\FileManagement\FileManagementProject\FileManagementProject\nlog.config

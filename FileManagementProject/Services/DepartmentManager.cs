@@ -1,4 +1,5 @@
 ﻿using FileManagementProject.Entities.Dtos;
+using FileManagementProject.Entities.Exceptions;
 using FileManagementProject.Entities.Models;
 using FileManagementProject.Repositories.Contracts;
 using FileManagementProject.Services.Contracts;
@@ -21,7 +22,10 @@ namespace FileManagementProject.Services
 
         public Department GetDepartmentWithChildren(int id, bool trackChanges)
         {
-            return _manager.Department.GetDepartmentWithChildren(id, trackChanges);
+            var department = _manager.Department.GetDepartmentWithChildren(id, trackChanges);
+            if(department is null)
+                throw new DepartmentNotFoundException(id);
+            return department;
         }
 
         public DepartmentDto MaptoDtoWithChildren(Department department)
@@ -33,10 +37,7 @@ namespace FileManagementProject.Services
         {
             var entity = _manager.Department.GetDepartmentWithChildren(id, trackChanges);
             if (entity is null)
-                throw new Exception($"Department with id:{id} not found.");
-
-            if(department is null)
-                throw new ArgumentNullException(nameof(department));
+                throw new DepartmentNotFoundException(id);
 
             entity.DepartmentName = department.DepartmentName;
             entity.DepartmentId = department.DepartmentId;
