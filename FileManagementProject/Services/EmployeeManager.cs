@@ -1,4 +1,5 @@
-﻿using FileManagementProject.Entities.Models;
+﻿using FileManagementProject.Entities.Exceptions;
+using FileManagementProject.Entities.Models;
 using FileManagementProject.Repositories.Contracts;
 using FileManagementProject.Services.Contracts;
 
@@ -27,13 +28,8 @@ namespace FileManagementProject.Services
         {
             // check entity
             var entity = _manager.Employee.GetOneEmployeeById(id, trackChanges);
-            if(entity is null)
-            {
-                string message = $"The employee with id:{id} could not found";
-                _logger.LogInformation(message);
-                throw new Exception(message);
-            }
-                
+            if (entity is null)
+                throw new EmployeeNotFoundException(id);
 
             _manager.Employee.DeleteOneEmployee(entity);
             _manager.Save();
@@ -47,7 +43,10 @@ namespace FileManagementProject.Services
 
         public Employee GetOneEmployeeById(int id, bool trackChanges)
         {
-            return _manager.Employee.GetOneEmployeeById(id, trackChanges);
+            var employee =  _manager.Employee.GetOneEmployeeById(id, trackChanges);
+            if(employee is null)
+                throw new EmployeeNotFoundException(id);
+            return employee;
         }
 
         public Employee GetOneEmployeeWithDepartment(int id, bool trackChanges)
@@ -59,11 +58,8 @@ namespace FileManagementProject.Services
         {
             //check entity
             var entity = _manager.Employee.GetOneEmployeeById(id, trackChanges);
-            if(entity is null)
-                throw new Exception($"Employee with id:{id} could not found.");
-
-            if(employee is null)
-                throw new ArgumentNullException(nameof(employee));
+            if (entity is null)
+                throw new EmployeeNotFoundException(id);
 
             entity.EmployeeFirstName = employee.EmployeeFirstName;
             entity.EmployeeLastName = employee.EmployeeLastName;
